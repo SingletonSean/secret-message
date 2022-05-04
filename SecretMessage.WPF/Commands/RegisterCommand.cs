@@ -1,5 +1,6 @@
 ﻿using Firebase.Auth;
 using MVVMEssentials.Commands;
+using MVVMEssentials.Services;
 using SecretMessage.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,16 @@ namespace SecretMessage.WPF.Commands
     {
         private readonly RegisterViewModel _registerViewModel;
         private readonly FirebaseAuthProvider _firebaseAuthProvider;
+        private readonly INavigationService _loginNavigationService;
 
-        public RegisterCommand(RegisterViewModel registerViewModel, FirebaseAuthProvider firebaseAuthProvider)
+        public RegisterCommand(
+            RegisterViewModel registerViewModel, 
+            FirebaseAuthProvider firebaseAuthProvider, 
+            INavigationService loginNavigationService)
         {
             _registerViewModel = registerViewModel;
             _firebaseAuthProvider = firebaseAuthProvider;
+            _loginNavigationService = loginNavigationService;
         }
 
         protected override async Task ExecuteAsync(object parameter)
@@ -39,10 +45,9 @@ namespace SecretMessage.WPF.Commands
                     password,
                     _registerViewModel.Username);
 
-
                 MessageBox.Show("Successfully registered!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // navigate to login
+                _loginNavigationService.Navigate();
             }
             catch (Exception)
             {

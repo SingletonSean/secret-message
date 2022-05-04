@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="SecretMessage.WPF.Views.RegisterView"
+    x:Class="SecretMessage.WPF.Views.LoginView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:components="clr-namespace:PasswordBoxMVVM.Components;assembly=PasswordBoxMVVM"
@@ -18,12 +18,10 @@
         <TextBlock
             Grid.Row="0"
             FontSize="32"
-            Text="Register" />
+            Text="Login" />
 
         <Grid Grid.Row="1" Margin="0 20 0 0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
@@ -36,31 +34,21 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1" Margin="0 10 0 0">
-                <TextBlock Text="Username" />
-                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
-            </StackPanel>
-
-            <StackPanel Grid.Row="2" Margin="0 10 0 0">
                 <TextBlock Text="Password" />
                 <components:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
 
-            <StackPanel Grid.Row="3" Margin="0 10 0 0">
-                <TextBlock Text="Confirm Password" />
-                <components:BindablePasswordBox Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged}" />
-            </StackPanel>
-
             <Button
-                Grid.Row="4"
+                Grid.Row="2"
                 Margin="0 20 0 0"
                 Command="{Binding SubmitCommand}"
                 Content="Submit" />
 
             <Button
-                Grid.Row="5"
+                Grid.Row="3"
                 Margin="0 10 0 0"
-                Command="{Binding NavigateLoginCommand}"
-                Content="Already have an account? Login"
+                Command="{Binding NavigateRegisterCommand}"
+                Content="Need an account? Register"
                 Style="{StaticResource ButtonTransparent}" />
         </Grid>
     </Grid>

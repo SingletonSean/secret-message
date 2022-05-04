@@ -1,4 +1,6 @@
 ﻿using Firebase.Auth;
+using MVVMEssentials.Commands;
+using MVVMEssentials.Services;
 using MVVMEssentials.ViewModels;
 using SecretMessage.WPF.Commands;
 using System;
@@ -72,9 +74,10 @@ namespace SecretMessage.WPF.ViewModels
 
         public ICommand NavigateLoginCommand { get; }
 
-        public RegisterViewModel(FirebaseAuthProvider firebaseAuthProvider)
+        public RegisterViewModel(FirebaseAuthProvider firebaseAuthProvider, INavigationService loginNavigationService)
         {
-            SubmitCommand = new RegisterCommand(this, firebaseAuthProvider);
+            SubmitCommand = new RegisterCommand(this, firebaseAuthProvider, loginNavigationService);
+            NavigateLoginCommand = new NavigateCommand(loginNavigationService);
         }
     }
 }
