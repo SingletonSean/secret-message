@@ -20,6 +20,9 @@
                 <DataTemplate DataType="{x:Type vms:LoginViewModel}">
                     <views:LoginView />
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:HomeViewModel}">
+                    <views:HomeView />
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
     </Grid>

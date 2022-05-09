@@ -3,6 +3,7 @@ using MVVMEssentials.Commands;
 using MVVMEssentials.Services;
 using MVVMEssentials.ViewModels;
 using SecretMessage.WPF.Commands;
+using SecretMessage.WPF.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,9 +47,12 @@ namespace SecretMessage.WPF.ViewModels
 
         public ICommand NavigateRegisterCommand { get; }
 
-        public LoginViewModel(FirebaseAuthProvider firebaseAuthProvider, INavigationService registerNavigationService)
+        public LoginViewModel(
+            AuthenticationStore authenticationStore, 
+            INavigationService registerNavigationService, 
+            INavigationService homeNavigationService)
         {
-            SubmitCommand = new LoginCommand(this, firebaseAuthProvider);
+            SubmitCommand = new LoginCommand(this, authenticationStore, homeNavigationService);
             NavigateRegisterCommand = new NavigateCommand(registerNavigationService);
         }
     }

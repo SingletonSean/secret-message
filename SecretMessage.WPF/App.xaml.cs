@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using MVVMEssentials.Services;
 using MVVMEssentials.Stores;
 using MVVMEssentials.ViewModels;
+using SecretMessage.WPF.Stores;
 using SecretMessage.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace SecretMessage.WPF
 
                     service.AddSingleton<NavigationStore>();
                     service.AddSingleton<ModalNavigationStore>();
+                    service.AddSingleton<AuthenticationStore>();
 
                     service.AddSingleton<NavigationService<RegisterViewModel>>(
                         (services) => new NavigationService<RegisterViewModel>(
@@ -46,8 +48,13 @@ namespace SecretMessage.WPF
                         (services) => new NavigationService<LoginViewModel>(
                             services.GetRequiredService<NavigationStore>(),
                             () => new LoginViewModel(
-                                services.GetRequiredService<FirebaseAuthProvider>(),
-                                services.GetRequiredService<NavigationService<RegisterViewModel>>())));
+                                services.GetRequiredService<AuthenticationStore>(),
+                                services.GetRequiredService<NavigationService<RegisterViewModel>>(),
+                                services.GetRequiredService<NavigationService<HomeViewModel>>())));
+                    service.AddSingleton<NavigationService<HomeViewModel>>(
+                        (services) => new NavigationService<HomeViewModel>(
+                            services.GetRequiredService<NavigationStore>(),
+                            () => new HomeViewModel(services.GetRequiredService<AuthenticationStore>())));
 
                     service.AddSingleton<MainViewModel>();
 
