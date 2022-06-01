@@ -5,6 +5,9 @@ using Microsoft.Extensions.Hosting;
 using MVVMEssentials.Services;
 using MVVMEssentials.Stores;
 using MVVMEssentials.ViewModels;
+using Refit;
+using SecretMessage.WPF.Http;
+using SecretMessage.WPF.Queries;
 using SecretMessage.WPF.Stores;
 using SecretMessage.WPF.ViewModels;
 using System;
@@ -34,6 +37,12 @@ namespace SecretMessage.WPF
 
                     service.AddSingleton(new FirebaseAuthProvider(new FirebaseConfig(firebaseApiKey)));
 
+                    service.AddTransient<FirebaseAuthHttpMessageHandler>();
+
+                    service.AddRefitClient<IGetSecretMessageQuery>()
+                        .ConfigureHttpClient(c => c.BaseAddress = new Uri(context.Configuration.GetValue<string>("SECRET_MESSAGE_API_BASE_URL")))
+                        .AddHttpMessageHandler<FirebaseAuthHttpMessageHandler>();
+
                     service.AddSingleton<NavigationStore>();
                     service.AddSingleton<ModalNavigationStore>();
                     service.AddSingleton<AuthenticationStore>();
@@ -54,7 +63,9 @@ namespace SecretMessage.WPF
                     service.AddSingleton<NavigationService<HomeViewModel>>(
                         (services) => new NavigationService<HomeViewModel>(
                             services.GetRequiredService<NavigationStore>(),
-                            () => new HomeViewModel(services.GetRequiredService<AuthenticationStore>())));
+                            () => HomeViewModel.LoadViewModel(
+                                services.GetRequiredService<AuthenticationStore>(),
+                                services.GetRequiredService<IGetSecretMessageQuery>())));
 
                     service.AddSingleton<MainViewModel>();
 

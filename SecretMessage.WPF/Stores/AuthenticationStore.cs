@@ -24,5 +24,10 @@ namespace SecretMessage.WPF.Stores
         {
             _currentFirebaseAuthLink = await _firebaseAuthProvider.SignInWithEmailAndPasswordAsync(email, password);
         }
+
+        public Task<FirebaseAuthLink> GetFreshAuthAsync()
+        {
+            return _currentFirebaseAuthLink.GetFreshAuthAsync();
+        }
     }
 }

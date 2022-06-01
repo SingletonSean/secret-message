@@ -2,7 +2,7 @@ using FirebaseAdmin;
 using FirebaseAdminAuthentication.DependencyInjection.Extensions;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authorization;
-using SecretMessage.API.Responses;
+using SecretMessage.Core.Responses;
 
 var builder = WebApplication.CreateBuilder(args);
 
