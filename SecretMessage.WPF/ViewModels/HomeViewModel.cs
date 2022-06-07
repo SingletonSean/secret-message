@@ -1,4 +1,5 @@
-﻿using MVVMEssentials.ViewModels;
+﻿using MVVMEssentials.Services;
+using MVVMEssentials.ViewModels;
 using SecretMessage.WPF.Commands;
 using SecretMessage.WPF.Queries;
 using SecretMessage.WPF.Stores;
@@ -32,17 +33,25 @@ namespace SecretMessage.WPF.ViewModels
         }
 
         public ICommand LoadSecretMessageCommand { get; }
+        public ICommand LogoutCommand { get; }
 
-        public HomeViewModel(AuthenticationStore authenticationStore, IGetSecretMessageQuery getSecretMessageQuery)
+        public HomeViewModel(
+            AuthenticationStore authenticationStore, 
+            IGetSecretMessageQuery getSecretMessageQuery, 
+            INavigationService loginNavigationService)
         {
             _authenticationStore = authenticationStore;
 
             LoadSecretMessageCommand = new LoadSecretMessageCommand(this, getSecretMessageQuery);
+            LogoutCommand = new LogoutCommand(authenticationStore, loginNavigationService);
         }
 
-        public static HomeViewModel LoadViewModel(AuthenticationStore authenticationStore, IGetSecretMessageQuery getSecretMessageQuery)
+        public static HomeViewModel LoadViewModel(
+            AuthenticationStore authenticationStore, 
+            IGetSecretMessageQuery getSecretMessageQuery,
+            INavigationService loginNavigationService)
         {
-            HomeViewModel homeViewModel = new HomeViewModel(authenticationStore, getSecretMessageQuery);
+            HomeViewModel homeViewModel = new HomeViewModel(authenticationStore, getSecretMessageQuery, loginNavigationService);
 
             homeViewModel.LoadSecretMessageCommand.Execute(null);
 

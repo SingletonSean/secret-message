@@ -18,11 +18,19 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="1">
+            <TextBlock Grid.Column="1" VerticalAlignment="Center">
                 <Run Text="Hello, " /><Run FontWeight="Bold" Text="{Binding Username, Mode=OneWay}" /><Run Text="!" />
             </TextBlock>
+
+            <Button
+                Grid.Column="2"
+                Margin="10 0 0 0"
+                Command="{Binding LogoutCommand}"
+                Content="Logout"
+                Style="{StaticResource ButtonTransparent}" />
         </Grid>
 
         <TextBlock

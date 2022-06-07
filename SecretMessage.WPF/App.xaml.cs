@@ -65,7 +65,8 @@ namespace SecretMessage.WPF
                             services.GetRequiredService<NavigationStore>(),
                             () => HomeViewModel.LoadViewModel(
                                 services.GetRequiredService<AuthenticationStore>(),
-                                services.GetRequiredService<IGetSecretMessageQuery>())));
+                                services.GetRequiredService<IGetSecretMessageQuery>(),
+                                services.GetRequiredService<NavigationService<LoginViewModel>>())));
 
                     service.AddSingleton<MainViewModel>();
 

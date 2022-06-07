@@ -24,7 +24,10 @@ namespace SecretMessage.WPF.Http
         {
             FirebaseAuthLink firebaseAuthLink = await _authenticationStore.GetFreshAuthAsync();
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", firebaseAuthLink.FirebaseToken);
+            if(firebaseAuthLink != null)
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", firebaseAuthLink.FirebaseToken);
+            }
 
             return await base.SendAsync(request, cancellationToken);
         }
