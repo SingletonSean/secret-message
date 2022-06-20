@@ -78,15 +78,44 @@ namespace SecretMessage.WPF
                 .Build();
         }
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
-            INavigationService navigationService = _host.Services.GetRequiredService<NavigationService<LoginViewModel>>();
-            navigationService.Navigate();
+            await Initialize();
 
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
-            
+
             base.OnStartup(e);
+        }
+
+        private async Task Initialize()
+        {
+            AuthenticationStore authenticationStore = _host.Services.GetRequiredService<AuthenticationStore>();
+
+            try
+            {
+                await authenticationStore.Initialize();
+
+                if (authenticationStore.IsLoggedIn)
+                {
+                    INavigationService navigationService = _host.Services.GetRequiredService<NavigationService<HomeViewModel>>();
+                    navigationService.Navigate();
+                }
+                else
+                {
+                    INavigationService navigationService = _host.Services.GetRequiredService<NavigationService<LoginViewModel>>();
+                    navigationService.Navigate();
+                }
+            }
+            catch (FirebaseAuthException)
+            {
+                INavigationService navigationService = _host.Services.GetRequiredService<NavigationService<LoginViewModel>>();
+                navigationService.Navigate();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Failed to load application.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
