@@ -59,13 +59,20 @@ namespace SecretMessage.WPF
                             () => new LoginViewModel(
                                 services.GetRequiredService<AuthenticationStore>(),
                                 services.GetRequiredService<NavigationService<RegisterViewModel>>(),
-                                services.GetRequiredService<NavigationService<HomeViewModel>>())));
+                                services.GetRequiredService<NavigationService<HomeViewModel>>(),
+                                services.GetRequiredService<NavigationService<PasswordResetViewModel>>())));
                     service.AddSingleton<NavigationService<HomeViewModel>>(
                         (services) => new NavigationService<HomeViewModel>(
                             services.GetRequiredService<NavigationStore>(),
                             () => HomeViewModel.LoadViewModel(
                                 services.GetRequiredService<AuthenticationStore>(),
                                 services.GetRequiredService<IGetSecretMessageQuery>(),
+                                services.GetRequiredService<NavigationService<LoginViewModel>>())));
+                    service.AddSingleton<NavigationService<PasswordResetViewModel>>(
+                        (services) => new NavigationService<PasswordResetViewModel>(
+                            services.GetRequiredService<NavigationStore>(),
+                            () => new PasswordResetViewModel(
+                                services.GetRequiredService<FirebaseAuthProvider>(),
                                 services.GetRequiredService<NavigationService<LoginViewModel>>())));
 
                     service.AddSingleton<MainViewModel>();
