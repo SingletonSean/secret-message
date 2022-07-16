@@ -39,11 +39,9 @@ namespace SecretMessage.WPF.Stores
                 return;
             }
 
-            FirebaseAuthLink firebaseAuthLink = new FirebaseAuthLink(_firebaseAuthProvider, firebaseAuth);
+            _currentFirebaseAuthLink = new FirebaseAuthLink(_firebaseAuthProvider, firebaseAuth);
 
-            await firebaseAuthLink.GetFreshAuthAsync();
-            
-            _currentFirebaseAuthLink = firebaseAuthLink;
+            await GetFreshAuthAsync();
         }
 
         public async Task Login(string email, string password)

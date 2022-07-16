@@ -21,9 +21,15 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="1" VerticalAlignment="Center">
-                <Run Text="Hello, " /><Run FontWeight="Bold" Text="{Binding Username, Mode=OneWay}" /><Run Text="!" />
-            </TextBlock>
+            <Button
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Command="{Binding NavigateProfileCommand}"
+                Style="{StaticResource ButtonTransparent}">
+                <TextBlock>
+                    <Run Text="Hello, " /><Run FontWeight="Bold" Text="{Binding Username, Mode=OneWay}" /><Run Text="!" />
+                </TextBlock>
+            </Button>
 
             <Button
                 Grid.Column="2"

@@ -26,6 +26,9 @@
                 <DataTemplate DataType="{x:Type vms:PasswordResetViewModel}">
                     <views:PasswordResetView />
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:ProfileViewModel}">
+                    <views:ProfileView />
+                </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
     </ScrollViewer>

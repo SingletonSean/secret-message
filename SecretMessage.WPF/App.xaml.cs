@@ -31,29 +31,29 @@ namespace SecretMessage.WPF
         {
             _host = Host
                 .CreateDefaultBuilder()
-                .ConfigureServices((context, service) =>
+                .ConfigureServices((context, serviceCollection) =>
                 {
                     string firebaseApiKey = context.Configuration.GetValue<string>("FIREBASE_API_KEY");
 
-                    service.AddSingleton(new FirebaseAuthProvider(new FirebaseConfig(firebaseApiKey)));
+                    serviceCollection.AddSingleton(new FirebaseAuthProvider(new FirebaseConfig(firebaseApiKey)));
 
-                    service.AddTransient<FirebaseAuthHttpMessageHandler>();
+                    serviceCollection.AddTransient<FirebaseAuthHttpMessageHandler>();
 
-                    service.AddRefitClient<IGetSecretMessageQuery>()
+                    serviceCollection.AddRefitClient<IGetSecretMessageQuery>()
                         .ConfigureHttpClient(c => c.BaseAddress = new Uri(context.Configuration.GetValue<string>("SECRET_MESSAGE_API_BASE_URL")))
                         .AddHttpMessageHandler<FirebaseAuthHttpMessageHandler>();
 
-                    service.AddSingleton<NavigationStore>();
-                    service.AddSingleton<ModalNavigationStore>();
-                    service.AddSingleton<AuthenticationStore>();
+                    serviceCollection.AddSingleton<NavigationStore>();
+                    serviceCollection.AddSingleton<ModalNavigationStore>();
+                    serviceCollection.AddSingleton<AuthenticationStore>();
 
-                    service.AddSingleton<NavigationService<RegisterViewModel>>(
+                    serviceCollection.AddSingleton<NavigationService<RegisterViewModel>>(
                         (services) => new NavigationService<RegisterViewModel>(
                             services.GetRequiredService<NavigationStore>(),
                             () => new RegisterViewModel(
                                 services.GetRequiredService<FirebaseAuthProvider>(),
                                 services.GetRequiredService<NavigationService<LoginViewModel>>())));
-                    service.AddSingleton<NavigationService<LoginViewModel>>(
+                    serviceCollection.AddSingleton<NavigationService<LoginViewModel>>(
                         (services) => new NavigationService<LoginViewModel>(
                             services.GetRequiredService<NavigationStore>(),
                             () => new LoginViewModel(
@@ -61,23 +61,30 @@ namespace SecretMessage.WPF
                                 services.GetRequiredService<NavigationService<RegisterViewModel>>(),
                                 services.GetRequiredService<NavigationService<HomeViewModel>>(),
                                 services.GetRequiredService<NavigationService<PasswordResetViewModel>>())));
-                    service.AddSingleton<NavigationService<HomeViewModel>>(
+                    serviceCollection.AddSingleton<NavigationService<HomeViewModel>>(
                         (services) => new NavigationService<HomeViewModel>(
                             services.GetRequiredService<NavigationStore>(),
                             () => HomeViewModel.LoadViewModel(
                                 services.GetRequiredService<AuthenticationStore>(),
                                 services.GetRequiredService<IGetSecretMessageQuery>(),
+                                services.GetRequiredService<NavigationService<ProfileViewModel>>(),
                                 services.GetRequiredService<NavigationService<LoginViewModel>>())));
-                    service.AddSingleton<NavigationService<PasswordResetViewModel>>(
+                    serviceCollection.AddSingleton<NavigationService<PasswordResetViewModel>>(
                         (services) => new NavigationService<PasswordResetViewModel>(
                             services.GetRequiredService<NavigationStore>(),
                             () => new PasswordResetViewModel(
                                 services.GetRequiredService<FirebaseAuthProvider>(),
                                 services.GetRequiredService<NavigationService<LoginViewModel>>())));
+                    serviceCollection.AddSingleton<NavigationService<ProfileViewModel>>(
+                        (services) => new NavigationService<ProfileViewModel>(
+                            services.GetRequiredService<NavigationStore>(),
+                            () => new ProfileViewModel(
+                                services.GetRequiredService<AuthenticationStore>(),
+                                services.GetRequiredService<NavigationService<HomeViewModel>>())));
 
-                    service.AddSingleton<MainViewModel>();
+                    serviceCollection.AddSingleton<MainViewModel>();
 
-                    service.AddSingleton<MainWindow>((services) => new MainWindow()
+                    serviceCollection.AddSingleton<MainWindow>((services) => new MainWindow()
                     {
                         DataContext = services.GetRequiredService<MainViewModel>()
                     });
