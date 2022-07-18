@@ -47,7 +47,7 @@ namespace SecretMessage.WPF.Stores
         public async Task Login(string email, string password)
         {
             _currentFirebaseAuthLink = await _firebaseAuthProvider.SignInWithEmailAndPasswordAsync(email, password);
-
+            
             SaveAuthenticationState();
         }
 
@@ -70,6 +70,18 @@ namespace SecretMessage.WPF.Stores
             SaveAuthenticationState();
 
             return _currentFirebaseAuthLink;
+        }
+
+        public async Task SendEmailVerificationEmail()
+        {
+            if (_currentFirebaseAuthLink == null)
+            {
+                throw new Exception("User is not authenticated.");
+            }
+
+            await GetFreshAuthAsync();
+
+            await _firebaseAuthProvider.SendEmailVerificationAsync(_currentFirebaseAuthLink.FirebaseToken);
         }
 
         private void SaveAuthenticationState()

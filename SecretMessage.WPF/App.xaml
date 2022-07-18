@@ -23,5 +23,13 @@
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
+
+        <Style
+            x:Key="ButtonLink"
+            BasedOn="{StaticResource ButtonTransparent}"
+            TargetType="Button">
+            <Setter Property="Foreground" Value="Blue" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
     </Application.Resources>
 </Application>

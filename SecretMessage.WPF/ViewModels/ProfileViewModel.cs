@@ -1,6 +1,7 @@
 ﻿using MVVMEssentials.Commands;
 using MVVMEssentials.Services;
 using MVVMEssentials.ViewModels;
+using SecretMessage.WPF.Commands;
 using SecretMessage.WPF.Stores;
 using System;
 using System.Collections.Generic;
@@ -19,12 +20,14 @@ namespace SecretMessage.WPF.ViewModels
         public string Email => _authenticationStore.CurrentUser?.Email ?? string.Empty;
         public bool IsEmailVerified => _authenticationStore.CurrentUser?.IsEmailVerified ?? false;
 
+        public ICommand SendEmailVerificationEmailCommand { get; }
         public ICommand NavigateHomeCommand { get; }
 
         public ProfileViewModel(AuthenticationStore authenticationStore, INavigationService homeNavigationService)
         {
             _authenticationStore = authenticationStore;
 
+            SendEmailVerificationEmailCommand = new SendEmailVerificationEmailCommand(authenticationStore);
             NavigateHomeCommand = new NavigateCommand(homeNavigationService);
         }
     }

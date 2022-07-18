@@ -66,6 +66,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" SharedSizeGroup="Label" />
                     <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
@@ -84,6 +85,21 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
+                <Button
+                    Grid.Column="2"
+                    Margin="5 0 0 0"
+                    Command="{Binding SendEmailVerificationEmailCommand}"
+                    Content="(verify email)">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource ButtonLink}" TargetType="Button">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEmailVerified}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
 
             <Button

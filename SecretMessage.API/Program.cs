@@ -3,6 +3,7 @@ using FirebaseAdminAuthentication.DependencyInjection.Extensions;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authorization;
 using SecretMessage.Core.Responses;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/", [Authorize] () =>
+app.MapGet("/", [Authorize] (ClaimsPrincipal principal) =>
 {
     return Results.Json(new SecretMessageResponse() { Message = "Firebase is cool." });
 });
