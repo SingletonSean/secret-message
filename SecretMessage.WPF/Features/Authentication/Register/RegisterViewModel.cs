@@ -70,6 +70,20 @@ namespace SecretMessage.WPF.ViewModels
             }
         }
 
+        private bool _shouldSendVerificationEmail = true;
+        public bool ShouldSendVerificationEmail
+        {
+            get
+            {
+                return _shouldSendVerificationEmail;
+            }
+            set
+            {
+                _shouldSendVerificationEmail = value;
+                OnPropertyChanged(nameof(ShouldSendVerificationEmail));
+            }
+        }
+
         public ICommand SubmitCommand { get; }
 
         public ICommand NavigateLoginCommand { get; }

@@ -44,7 +44,7 @@ namespace SecretMessage.WPF.Commands
                     _registerViewModel.Email,
                     password,
                     _registerViewModel.Username,
-                    true);
+                    _registerViewModel.ShouldSendVerificationEmail);
 
                 MessageBox.Show("Successfully registered!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
