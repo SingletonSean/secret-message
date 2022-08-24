@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace SecretMessage.WPF.ViewModels
 {
-    public class RegisterViewModel : ViewModelBase
+    public class RegisterFormViewModel : ViewModelBase
     {
         private string _email;
         public string Email
@@ -88,7 +88,7 @@ namespace SecretMessage.WPF.ViewModels
 
         public ICommand NavigateLoginCommand { get; }
 
-        public RegisterViewModel(FirebaseAuthProvider firebaseAuthProvider, INavigationService loginNavigationService)
+        public RegisterFormViewModel(FirebaseAuthProvider firebaseAuthProvider, INavigationService loginNavigationService)
         {
             SubmitCommand = new RegisterCommand(this, firebaseAuthProvider, loginNavigationService);
             NavigateLoginCommand = new NavigateCommand(loginNavigationService);

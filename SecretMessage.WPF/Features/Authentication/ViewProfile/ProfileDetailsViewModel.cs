@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace SecretMessage.WPF.ViewModels
 {
-    public class ProfileViewModel : ViewModelBase
+    public class ProfileDetailsViewModel : ViewModelBase
     {
         private readonly AuthenticationStore _authenticationStore;
 
@@ -23,7 +23,7 @@ namespace SecretMessage.WPF.ViewModels
         public ICommand SendEmailVerificationEmailCommand { get; }
         public ICommand NavigateHomeCommand { get; }
 
-        public ProfileViewModel(AuthenticationStore authenticationStore, INavigationService homeNavigationService)
+        public ProfileDetailsViewModel(AuthenticationStore authenticationStore, INavigationService homeNavigationService)
         {
             _authenticationStore = authenticationStore;
 

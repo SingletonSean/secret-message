@@ -2,6 +2,7 @@
 using MVVMEssentials.Services;
 using MVVMEssentials.ViewModels;
 using SecretMessage.WPF.Commands;
+using SecretMessage.WPF.Features.SecretMessage.ViewSecretMessage;
 using SecretMessage.WPF.Queries;
 using SecretMessage.WPF.Stores;
 using System;
@@ -13,7 +14,7 @@ using System.Windows.Input;
 
 namespace SecretMessage.WPF.ViewModels
 {
-    public class HomeViewModel : ViewModelBase
+    public class HomeViewModel : ViewModelBase, IViewSecretMessageViewModel
     {
         private readonly AuthenticationStore _authenticationStore;
 

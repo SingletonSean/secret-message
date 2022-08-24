@@ -1,5 +1,4 @@
-﻿using Firebase.Auth;
-using MVVMEssentials.Commands;
+﻿using MVVMEssentials.Commands;
 using MVVMEssentials.Services;
 using MVVMEssentials.ViewModels;
 using SecretMessage.WPF.Commands;
@@ -11,9 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace SecretMessage.WPF.ViewModels
+namespace SecretMessage.WPF.Features.Authentication.Login
 {
-    public class LoginViewModel : ViewModelBase
+    public class LoginFormViewModel : ViewModelBase
     {
         private string _email;
         public string Email
@@ -49,10 +48,10 @@ namespace SecretMessage.WPF.ViewModels
 
         public ICommand NavigatePasswordResetCommand { get; }
 
-        public LoginViewModel(
-            AuthenticationStore authenticationStore, 
-            INavigationService registerNavigationService, 
-            INavigationService homeNavigationService, 
+        public LoginFormViewModel(
+            AuthenticationStore authenticationStore,
+            INavigationService registerNavigationService,
+            INavigationService homeNavigationService,
             INavigationService passwordResetNavigationService)
         {
             SubmitCommand = new LoginCommand(this, authenticationStore, homeNavigationService);

@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace SecretMessage.WPF.ViewModels
 {
-    public class PasswordResetViewModel : ViewModelBase
+    public class PasswordResetFormViewModel : ViewModelBase
     {
         private string _email;
         public string Email
@@ -32,7 +32,7 @@ namespace SecretMessage.WPF.ViewModels
 
         public ICommand NavigateLoginCommand { get; }
 
-        public PasswordResetViewModel(FirebaseAuthProvider firebaseAuthProvider, INavigationService loginNavigationService)
+        public PasswordResetFormViewModel(FirebaseAuthProvider firebaseAuthProvider, INavigationService loginNavigationService)
         {
             SendPasswordResetEmailCommand = new SendPasswordResetEmailCommand(this, firebaseAuthProvider, loginNavigationService);
             NavigateLoginCommand = new NavigateCommand(loginNavigationService);

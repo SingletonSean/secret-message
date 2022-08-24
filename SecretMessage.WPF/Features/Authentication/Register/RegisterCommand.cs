@@ -13,12 +13,12 @@ namespace SecretMessage.WPF.Commands
 {
     public class RegisterCommand : AsyncCommandBase
     {
-        private readonly RegisterViewModel _registerViewModel;
+        private readonly RegisterFormViewModel _registerViewModel;
         private readonly FirebaseAuthProvider _firebaseAuthProvider;
         private readonly INavigationService _loginNavigationService;
 
         public RegisterCommand(
-            RegisterViewModel registerViewModel, 
+            RegisterFormViewModel registerViewModel, 
             FirebaseAuthProvider firebaseAuthProvider, 
             INavigationService loginNavigationService)
         {

@@ -1,5 +1,6 @@
 ﻿using MVVMEssentials.Commands;
 using SecretMessage.Core.Responses;
+using SecretMessage.WPF.Features.SecretMessage.ViewSecretMessage;
 using SecretMessage.WPF.Queries;
 using SecretMessage.WPF.ViewModels;
 using System;
@@ -13,12 +14,12 @@ namespace SecretMessage.WPF.Commands
 {
     public class LoadSecretMessageCommand : AsyncCommandBase
     {
-        private readonly HomeViewModel _homeViewModel;
+        private readonly IViewSecretMessageViewModel _viewSecretMessageViewModel;
         private readonly IGetSecretMessageQuery _getSecretMessageQuery;
 
-        public LoadSecretMessageCommand(HomeViewModel homeViewModel, IGetSecretMessageQuery getSecretMessageQuery)
+        public LoadSecretMessageCommand(IViewSecretMessageViewModel viewSecretMessageViewModel, IGetSecretMessageQuery getSecretMessageQuery)
         {
-            _homeViewModel = homeViewModel;
+            _viewSecretMessageViewModel = viewSecretMessageViewModel;
             _getSecretMessageQuery = getSecretMessageQuery;
         }
 
@@ -28,7 +29,7 @@ namespace SecretMessage.WPF.Commands
             {
                 SecretMessageResponse secretMessageResponse = await _getSecretMessageQuery.Execute();
 
-                _homeViewModel.SecretMessage = secretMessageResponse.Message;
+                _viewSecretMessageViewModel.SecretMessage = secretMessageResponse.Message;
             }
             catch (Exception)
             {

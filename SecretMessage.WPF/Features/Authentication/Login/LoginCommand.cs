@@ -1,6 +1,7 @@
 ﻿using Firebase.Auth;
 using MVVMEssentials.Commands;
 using MVVMEssentials.Services;
+using SecretMessage.WPF.Features.Authentication.Login;
 using SecretMessage.WPF.Stores;
 using SecretMessage.WPF.ViewModels;
 using System;
@@ -14,12 +15,12 @@ namespace SecretMessage.WPF.Commands
 {
     public class LoginCommand : AsyncCommandBase
     {
-        private readonly LoginViewModel _loginViewModel;
+        private readonly LoginFormViewModel _loginViewModel;
         private readonly AuthenticationStore _authenticationStore;
         private readonly INavigationService _homeNavigationService;
 
         public LoginCommand(
-            LoginViewModel loginViewModel, 
+            LoginFormViewModel loginViewModel, 
             AuthenticationStore authenticationStore, 
             INavigationService homeNavigationService)
         {

@@ -13,12 +13,12 @@ namespace SecretMessage.WPF.Commands
 {
     public class SendPasswordResetEmailCommand : AsyncCommandBase
     {
-        private readonly PasswordResetViewModel _viewModel;
+        private readonly PasswordResetFormViewModel _viewModel;
         private readonly FirebaseAuthProvider _firebaseAuthProvider;
         private readonly INavigationService _loginNavigationService;
 
         public SendPasswordResetEmailCommand(
-            PasswordResetViewModel viewModel, 
+            PasswordResetFormViewModel viewModel, 
             FirebaseAuthProvider firebaseAuthProvider, 
             INavigationService loginNavigationService)
         {
