@@ -2,6 +2,7 @@
 using MVVMEssentials.Services;
 using MVVMEssentials.ViewModels;
 using SecretMessage.WPF.Commands;
+using SecretMessage.WPF.Entities.Users;
 using SecretMessage.WPF.Stores;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,11 @@ namespace SecretMessage.WPF.ViewModels
     {
         public ProfileDetailsViewModel ProfileDetailsViewModel { get; }
 
-        public ProfileViewModel(AuthenticationStore authenticationStore, INavigationService homeNavigationService)
+        public ProfileViewModel(AuthenticationStore authenticationStore, 
+            CurrentUserStore currentUserStore,
+            INavigationService homeNavigationService)
         {
-            ProfileDetailsViewModel = new ProfileDetailsViewModel(authenticationStore, homeNavigationService);
+            ProfileDetailsViewModel = new ProfileDetailsViewModel(authenticationStore, currentUserStore, homeNavigationService);
         }
     }
 }

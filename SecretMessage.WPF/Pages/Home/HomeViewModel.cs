@@ -2,6 +2,7 @@
 using MVVMEssentials.Services;
 using MVVMEssentials.ViewModels;
 using SecretMessage.WPF.Commands;
+using SecretMessage.WPF.Entities.Users;
 using SecretMessage.WPF.Features.SecretMessage.ViewSecretMessage;
 using SecretMessage.WPF.Queries;
 using SecretMessage.WPF.Stores;
@@ -16,9 +17,9 @@ namespace SecretMessage.WPF.ViewModels
 {
     public class HomeViewModel : ViewModelBase, IViewSecretMessageViewModel
     {
-        private readonly AuthenticationStore _authenticationStore;
+        private readonly CurrentUserStore _currentUserStore;
 
-        public string Username => _authenticationStore.CurrentUser?.DisplayName ?? "Unknown";
+        public string Username => _currentUserStore.User?.DisplayName ?? "Unknown";
 
         private string _secretMessage;
         public string SecretMessage
@@ -40,24 +41,26 @@ namespace SecretMessage.WPF.ViewModels
 
         public HomeViewModel(
             AuthenticationStore authenticationStore, 
+            CurrentUserStore currentUserStore,
             IGetSecretMessageQuery getSecretMessageQuery,
             INavigationService profileNavigationService,
             INavigationService loginNavigationService)
         {
-            _authenticationStore = authenticationStore;
+            _currentUserStore = currentUserStore;
 
-            LoadSecretMessageCommand = new LoadSecretMessageCommand(this, getSecretMessageQuery);
+            LoadSecretMessageCommand = new LoadSecretMessageCommand(this, getSecretMessageQuery, currentUserStore);
             NavigateProfileCommand = new NavigateCommand(profileNavigationService);
             LogoutCommand = new LogoutCommand(authenticationStore, loginNavigationService);
         }
 
         public static HomeViewModel LoadViewModel(
             AuthenticationStore authenticationStore, 
+            CurrentUserStore currentUserStore,
             IGetSecretMessageQuery getSecretMessageQuery,
             INavigationService profileNavigationService,
             INavigationService loginNavigationService)
         {
-            HomeViewModel homeViewModel = new HomeViewModel(authenticationStore, getSecretMessageQuery, profileNavigationService, loginNavigationService);
+            HomeViewModel homeViewModel = new HomeViewModel(authenticationStore, currentUserStore, getSecretMessageQuery, profileNavigationService, loginNavigationService);
 
             homeViewModel.LoadSecretMessageCommand.Execute(null);
 

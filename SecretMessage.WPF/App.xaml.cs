@@ -6,6 +6,7 @@ using MVVMEssentials.Services;
 using MVVMEssentials.Stores;
 using MVVMEssentials.ViewModels;
 using Refit;
+using SecretMessage.WPF.Entities.Users;
 using SecretMessage.WPF.Http;
 using SecretMessage.WPF.Queries;
 using SecretMessage.WPF.Stores;
@@ -46,6 +47,7 @@ namespace SecretMessage.WPF
                     serviceCollection.AddSingleton<NavigationStore>();
                     serviceCollection.AddSingleton<ModalNavigationStore>();
                     serviceCollection.AddSingleton<AuthenticationStore>();
+                    serviceCollection.AddSingleton<CurrentUserStore>();
 
                     serviceCollection.AddSingleton<NavigationService<RegisterViewModel>>(
                         (services) => new NavigationService<RegisterViewModel>(
@@ -66,6 +68,7 @@ namespace SecretMessage.WPF
                             services.GetRequiredService<NavigationStore>(),
                             () => HomeViewModel.LoadViewModel(
                                 services.GetRequiredService<AuthenticationStore>(),
+                                services.GetRequiredService<CurrentUserStore>(),
                                 services.GetRequiredService<IGetSecretMessageQuery>(),
                                 services.GetRequiredService<NavigationService<ProfileViewModel>>(),
                                 services.GetRequiredService<NavigationService<LoginViewModel>>())));
@@ -80,6 +83,7 @@ namespace SecretMessage.WPF
                             services.GetRequiredService<NavigationStore>(),
                             () => new ProfileViewModel(
                                 services.GetRequiredService<AuthenticationStore>(),
+                                services.GetRequiredService<CurrentUserStore>(),
                                 services.GetRequiredService<NavigationService<HomeViewModel>>())));
 
                     serviceCollection.AddSingleton<MainViewModel>();
@@ -105,12 +109,13 @@ namespace SecretMessage.WPF
         private async Task Initialize()
         {
             AuthenticationStore authenticationStore = _host.Services.GetRequiredService<AuthenticationStore>();
+            CurrentUserStore currentUserStore = _host.Services.GetRequiredService<CurrentUserStore>();
 
             try
             {
                 await authenticationStore.Initialize();
 
-                if (authenticationStore.IsLoggedIn)
+                if (currentUserStore.User.IsLoggedIn)
                 {
                     INavigationService navigationService = _host.Services.GetRequiredService<NavigationService<HomeViewModel>>();
                     navigationService.Navigate();

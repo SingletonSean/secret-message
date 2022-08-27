@@ -1,4 +1,5 @@
 ﻿using Firebase.Auth;
+using SecretMessage.WPF.Entities.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,12 @@ namespace SecretMessage.WPF.Stores
 {
     public class AuthenticationStore
     {
+        private readonly CurrentUserStore _currentUserStore;
         private readonly FirebaseAuthProvider _firebaseAuthProvider;
 
-        private FirebaseAuthLink _currentFirebaseAuthLink;
-
-        public User? CurrentUser => _currentFirebaseAuthLink?.User;
-
-        public bool IsLoggedIn => (!_currentFirebaseAuthLink?.IsExpired()) ?? false;
-
-        public AuthenticationStore(FirebaseAuthProvider firebaseAuthProvider)
+        public AuthenticationStore(CurrentUserStore currentUserStore, FirebaseAuthProvider firebaseAuthProvider)
         {
+            _currentUserStore = currentUserStore;
             _firebaseAuthProvider = firebaseAuthProvider;
         }
 
@@ -39,54 +36,54 @@ namespace SecretMessage.WPF.Stores
                 return;
             }
 
-            _currentFirebaseAuthLink = new FirebaseAuthLink(_firebaseAuthProvider, firebaseAuth);
+            _currentUserStore.UpdateAuth(new FirebaseAuthLink(_firebaseAuthProvider, firebaseAuth));
 
             await GetFreshAuthAsync();
         }
 
         public async Task Login(string email, string password)
         {
-            _currentFirebaseAuthLink = await _firebaseAuthProvider.SignInWithEmailAndPasswordAsync(email, password);
+            _currentUserStore.UpdateAuth(await _firebaseAuthProvider.SignInWithEmailAndPasswordAsync(email, password));
             
             SaveAuthenticationState();
         }
 
         public void Logout()
         {
-            _currentFirebaseAuthLink = null;
+            _currentUserStore.UpdateAuth(null);
 
             ClearAuthenticationState();
         }
 
         public async Task<FirebaseAuthLink> GetFreshAuthAsync()
         {
-            if (_currentFirebaseAuthLink == null)
+            if (_currentUserStore.User.Auth == null)
             {
                 return null;
             }
 
-            _currentFirebaseAuthLink = await _currentFirebaseAuthLink.GetFreshAuthAsync();
+            _currentUserStore.UpdateAuth(await _currentUserStore.User.Auth.GetFreshAuthAsync());
             
             SaveAuthenticationState();
 
-            return _currentFirebaseAuthLink;
+            return _currentUserStore.User.Auth;
         }
 
         public async Task SendEmailVerificationEmail()
         {
-            if (_currentFirebaseAuthLink == null)
+            if (_currentUserStore.User.Auth == null)
             {
                 throw new Exception("User is not authenticated.");
             }
 
             await GetFreshAuthAsync();
 
-            await _firebaseAuthProvider.SendEmailVerificationAsync(_currentFirebaseAuthLink.FirebaseToken);
+            await _firebaseAuthProvider.SendEmailVerificationAsync(_currentUserStore.User.Auth.FirebaseToken);
         }
 
         private void SaveAuthenticationState()
         {
-            string firebaseAuthLinkJson = JsonSerializer.Serialize(_currentFirebaseAuthLink);
+            string firebaseAuthLinkJson = JsonSerializer.Serialize(_currentUserStore.User.Auth);
 
             Properties.Settings.Default.FirebaseAuth = firebaseAuthLinkJson;
             Properties.Settings.Default.Save();
