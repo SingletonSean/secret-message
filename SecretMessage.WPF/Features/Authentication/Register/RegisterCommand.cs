@@ -1,11 +1,8 @@
 ﻿using Firebase.Auth;
-using MVVMEssentials.Commands;
-using MVVMEssentials.Services;
+using SecretMessage.WPF.Shared.Commands;
+using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -27,7 +24,7 @@ namespace SecretMessage.WPF.Commands
             _loginNavigationService = loginNavigationService;
         }
 
-        protected override async Task ExecuteAsync(object parameter)
+        protected override async Task ExecuteAsync(object? parameter)
         {
             string password = _registerViewModel.Password;
             string confirmPassword = _registerViewModel.ConfirmPassword;

@@ -1,11 +1,6 @@
-﻿using MVVMEssentials.Commands;
-using MVVMEssentials.Services;
+﻿using SecretMessage.WPF.Shared.Commands;
+using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SecretMessage.WPF.Commands
 {
@@ -20,7 +15,7 @@ namespace SecretMessage.WPF.Commands
             _loginNavigationService = loginNavigationService;
         }
 
-        public override void Execute(object parameter)
+        public override void Execute(object? parameter)
         {
             _authenticationStore.Logout();
 

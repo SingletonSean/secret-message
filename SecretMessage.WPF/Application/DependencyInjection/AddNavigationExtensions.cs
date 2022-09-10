@@ -1,12 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MVVMEssentials.Stores;
-using SecretMessage.WPF.Entities.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SecretMessage.WPF.Shared.Navigation;
 
 namespace SecretMessage.WPF.Application.DependencyInjection
 {

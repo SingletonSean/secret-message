@@ -1,9 +1,6 @@
-﻿using MVVMEssentials.Commands;
+﻿using SecretMessage.WPF.Shared.Commands;
 using SecretMessage.WPF.Stores;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -18,7 +15,7 @@ namespace SecretMessage.WPF.Commands
             _authenticationStore = authenticationStore;
         }
 
-        protected override async Task ExecuteAsync(object parameter)
+        protected override async Task ExecuteAsync(object? parameter)
         {
             try
             {

@@ -1,13 +1,8 @@
 ﻿using Firebase.Auth;
-using MVVMEssentials.Commands;
-using MVVMEssentials.Services;
-using MVVMEssentials.ViewModels;
 using SecretMessage.WPF.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SecretMessage.WPF.Shared.Commands;
+using SecretMessage.WPF.Shared.Navigation;
+using SecretMessage.WPF.Shared.ViewModels;
 using System.Windows.Input;
 
 namespace SecretMessage.WPF.ViewModels

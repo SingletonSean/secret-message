@@ -1,8 +1,8 @@
-﻿using MVVMEssentials.Commands;
-using SecretMessage.Core.Responses;
+﻿using SecretMessage.Core.Responses;
 using SecretMessage.WPF.Entities.Users;
 using SecretMessage.WPF.Features.SecretMessage.ViewSecretMessage;
 using SecretMessage.WPF.Queries;
+using SecretMessage.WPF.Shared.Commands;
 using SecretMessage.WPF.Stores;
 using SecretMessage.WPF.ViewModels;
 using System;
@@ -30,7 +30,7 @@ namespace SecretMessage.WPF.Commands
             _currentUserStore = currentUserStore;
         }
 
-        protected override async Task ExecuteAsync(object parameter)
+        protected override async Task ExecuteAsync(object? parameter)
         {
             if(!_currentUserStore.User.IsLoggedIn)
             {

@@ -1,13 +1,8 @@
-﻿using Firebase.Auth;
-using MVVMEssentials.Commands;
-using MVVMEssentials.Services;
-using SecretMessage.WPF.Features.Authentication.Login;
+﻿using SecretMessage.WPF.Features.Authentication.Login;
+using SecretMessage.WPF.Shared.Commands;
+using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.Stores;
-using SecretMessage.WPF.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -29,7 +24,7 @@ namespace SecretMessage.WPF.Commands
             _homeNavigationService = homeNavigationService;
         }
 
-        protected override async Task ExecuteAsync(object parameter)
+        protected override async Task ExecuteAsync(object? parameter)
         {
             try
             {

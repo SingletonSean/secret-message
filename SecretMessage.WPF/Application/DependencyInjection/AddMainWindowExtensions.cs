@@ -1,13 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MVVMEssentials.ViewModels;
 using SecretMessage.WPF.Application.Initialization;
-using SecretMessage.WPF.Entities.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SecretMessage.WPF.Shared.ViewModels;
 
 namespace SecretMessage.WPF.Application.DependencyInjection
 {

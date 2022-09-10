@@ -1,16 +1,8 @@
-﻿using Firebase.Auth;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MVVMEssentials.Services;
-using MVVMEssentials.Stores;
-using SecretMessage.WPF.Entities.Users;
+using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.Stores;
 using SecretMessage.WPF.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SecretMessage.WPF.Application.DependencyInjection
 {
@@ -27,10 +19,7 @@ namespace SecretMessage.WPF.Application.DependencyInjection
                         services.GetRequiredService<NavigationService<HomeViewModel>>(),
                         services.GetRequiredService<NavigationService<PasswordResetViewModel>>()));
 
-                serviceCollection.AddSingleton<NavigationService<LoginViewModel>>(
-                    (services) => new NavigationService<LoginViewModel>(
-                        services.GetRequiredService<NavigationStore>(),
-                        () => services.GetRequiredService<LoginViewModel>()));
+                serviceCollection.AddNavigationService<LoginViewModel>();
             });
 
             return host;
