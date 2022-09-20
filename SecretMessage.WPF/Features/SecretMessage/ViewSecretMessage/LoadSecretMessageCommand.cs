@@ -19,15 +19,18 @@ namespace SecretMessage.WPF.Commands
         private readonly IViewSecretMessageViewModel _viewSecretMessageViewModel;
         private readonly IGetSecretMessageQuery _getSecretMessageQuery;
         private readonly CurrentUserStore _currentUserStore;
+        private readonly IViewSecretMessageDbContextFactory _dbContextFactory;
 
         public LoadSecretMessageCommand(
             IViewSecretMessageViewModel viewSecretMessageViewModel,
             IGetSecretMessageQuery getSecretMessageQuery,
-            CurrentUserStore currentUserStore)
+            CurrentUserStore currentUserStore, 
+            IViewSecretMessageDbContextFactory dbContextFactory)
         {
             _viewSecretMessageViewModel = viewSecretMessageViewModel;
             _getSecretMessageQuery = getSecretMessageQuery;
             _currentUserStore = currentUserStore;
+            _dbContextFactory = dbContextFactory;
         }
 
         protected override async Task ExecuteAsync(object? parameter)
@@ -43,6 +46,20 @@ namespace SecretMessage.WPF.Commands
                 SecretMessageResponse secretMessageResponse = await _getSecretMessageQuery.Execute();
 
                 _viewSecretMessageViewModel.SecretMessage = secretMessageResponse.Message;
+
+                ViewedSecretMessageDto viewedSecretMessageDto = new ViewedSecretMessageDto()
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = _currentUserStore.User.Id,
+                    Content = secretMessageResponse.Message,
+                    DateViewed = DateTimeOffset.UtcNow,
+                };
+
+                using (IViewSecretMessageDbContext context = _dbContextFactory.Create())
+                {
+                    context.ViewedSecretMessages.Add(viewedSecretMessageDto);
+                    await context.SaveChangesAsync();
+                }
             }
             catch (Exception)
             {

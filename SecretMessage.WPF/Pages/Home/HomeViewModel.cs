@@ -39,11 +39,12 @@ namespace SecretMessage.WPF.ViewModels
             CurrentUserStore currentUserStore,
             IGetSecretMessageQuery getSecretMessageQuery,
             INavigationService profileNavigationService,
-            INavigationService loginNavigationService)
+            INavigationService loginNavigationService,
+            IViewSecretMessageDbContextFactory dbContextFactory)
         {
             _currentUserStore = currentUserStore;
 
-            LoadSecretMessageCommand = new LoadSecretMessageCommand(this, getSecretMessageQuery, currentUserStore);
+            LoadSecretMessageCommand = new LoadSecretMessageCommand(this, getSecretMessageQuery, currentUserStore, dbContextFactory);
             NavigateProfileCommand = new NavigateCommand(profileNavigationService);
             LogoutCommand = new LogoutCommand(authenticationStore, loginNavigationService);
         }
@@ -53,9 +54,10 @@ namespace SecretMessage.WPF.ViewModels
             CurrentUserStore currentUserStore,
             IGetSecretMessageQuery getSecretMessageQuery,
             INavigationService profileNavigationService,
-            INavigationService loginNavigationService)
+            INavigationService loginNavigationService,
+            IViewSecretMessageDbContextFactory dbContextFactory)
         {
-            HomeViewModel homeViewModel = new HomeViewModel(authenticationStore, currentUserStore, getSecretMessageQuery, profileNavigationService, loginNavigationService);
+            HomeViewModel homeViewModel = new HomeViewModel(authenticationStore, currentUserStore, getSecretMessageQuery, profileNavigationService, loginNavigationService, dbContextFactory);
 
             homeViewModel.LoadSecretMessageCommand.Execute(null);
 

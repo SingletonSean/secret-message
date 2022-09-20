@@ -17,6 +17,7 @@ namespace SecretMessage.WPF
         {
             _host = Host
                 .CreateDefaultBuilder()
+                .AddSecretMessageDbContext()
                 .AddNavigation()
                 .AddUserEntity()
                 .AddSecretMessageFeature()
