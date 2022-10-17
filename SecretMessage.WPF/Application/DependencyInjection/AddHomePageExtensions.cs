@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using SecretMessage.WPF.Entities.Users;
 using SecretMessage.WPF.Queries;
+using SecretMessage.WPF.Shared.Database;
 using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.Stores;
 using SecretMessage.WPF.ViewModels;
@@ -20,7 +21,8 @@ namespace SecretMessage.WPF.Application.DependencyInjection
                         services.GetRequiredService<CurrentUserStore>(),
                         services.GetRequiredService<IGetSecretMessageQuery>(),
                         services.GetRequiredService<NavigationService<ProfileViewModel>>(),
-                        services.GetRequiredService<NavigationService<LoginViewModel>>()));
+                        services.GetRequiredService<NavigationService<LoginViewModel>>(),
+                        services.GetRequiredService<SqliteDbConnectionFactory>()));
 
                 serviceCollection.AddNavigationService<HomeViewModel>();
             });

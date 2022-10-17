@@ -3,6 +3,7 @@ using SecretMessage.WPF.Entities.Users;
 using SecretMessage.WPF.Features.SecretMessage.ViewSecretMessage;
 using SecretMessage.WPF.Queries;
 using SecretMessage.WPF.Shared.Commands;
+using SecretMessage.WPF.Shared.Database;
 using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.Shared.ViewModels;
 using SecretMessage.WPF.Stores;
@@ -39,11 +40,12 @@ namespace SecretMessage.WPF.ViewModels
             CurrentUserStore currentUserStore,
             IGetSecretMessageQuery getSecretMessageQuery,
             INavigationService profileNavigationService,
-            INavigationService loginNavigationService)
+            INavigationService loginNavigationService,
+            SqliteDbConnectionFactory dbConnectionFactory)
         {
             _currentUserStore = currentUserStore;
 
-            LoadSecretMessageCommand = new LoadSecretMessageCommand(this, getSecretMessageQuery, currentUserStore);
+            LoadSecretMessageCommand = new LoadSecretMessageCommand(this, getSecretMessageQuery, currentUserStore, dbConnectionFactory);
             NavigateProfileCommand = new NavigateCommand(profileNavigationService);
             LogoutCommand = new LogoutCommand(authenticationStore, loginNavigationService);
         }
@@ -53,9 +55,16 @@ namespace SecretMessage.WPF.ViewModels
             CurrentUserStore currentUserStore,
             IGetSecretMessageQuery getSecretMessageQuery,
             INavigationService profileNavigationService,
-            INavigationService loginNavigationService)
+            INavigationService loginNavigationService,
+            SqliteDbConnectionFactory dbConnectionFactory)
         {
-            HomeViewModel homeViewModel = new HomeViewModel(authenticationStore, currentUserStore, getSecretMessageQuery, profileNavigationService, loginNavigationService);
+            HomeViewModel homeViewModel = new HomeViewModel(
+                authenticationStore, 
+                currentUserStore, 
+                getSecretMessageQuery, 
+                profileNavigationService, 
+                loginNavigationService, 
+                dbConnectionFactory);
 
             homeViewModel.LoadSecretMessageCommand.Execute(null);
 

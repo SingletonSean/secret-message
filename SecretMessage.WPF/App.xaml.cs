@@ -17,6 +17,7 @@ namespace SecretMessage.WPF
         {
             _host = Host
                 .CreateDefaultBuilder()
+                .AddDapperDatabase()
                 .AddNavigation()
                 .AddUserEntity()
                 .AddSecretMessageFeature()
