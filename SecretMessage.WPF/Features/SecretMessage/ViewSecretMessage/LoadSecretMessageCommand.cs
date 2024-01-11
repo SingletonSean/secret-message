@@ -3,12 +3,7 @@ using SecretMessage.WPF.Entities.Users;
 using SecretMessage.WPF.Features.SecretMessage.ViewSecretMessage;
 using SecretMessage.WPF.Queries;
 using SecretMessage.WPF.Shared.Commands;
-using SecretMessage.WPF.Stores;
-using SecretMessage.WPF.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -24,7 +19,7 @@ namespace SecretMessage.WPF.Commands
         public LoadSecretMessageCommand(
             IViewSecretMessageViewModel viewSecretMessageViewModel,
             IGetSecretMessageQuery getSecretMessageQuery,
-            CurrentUserStore currentUserStore, 
+            CurrentUserStore currentUserStore,
             IViewSecretMessageDbContextFactory dbContextFactory)
         {
             _viewSecretMessageViewModel = viewSecretMessageViewModel;
@@ -35,7 +30,7 @@ namespace SecretMessage.WPF.Commands
 
         protected override async Task ExecuteAsync(object? parameter)
         {
-            if(!_currentUserStore.User.IsLoggedIn)
+            if (!_currentUserStore.IsLoggedIn)
             {
                 MessageBox.Show("You must login to view the secret message.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -50,7 +45,7 @@ namespace SecretMessage.WPF.Commands
                 ViewedSecretMessageDto viewedSecretMessageDto = new ViewedSecretMessageDto()
                 {
                     Id = Guid.NewGuid(),
-                    UserId = _currentUserStore.User.Id,
+                    UserId = _currentUserStore.User?.Id ?? "",
                     Content = secretMessageResponse.Message,
                     DateViewed = DateTimeOffset.UtcNow,
                 };

@@ -1,24 +1,31 @@
 ﻿using Firebase.Auth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SecretMessage.WPF.Entities.Users
 {
     public class CurrentUserStore
     {
-        public User User { get; private set; }
+        private readonly FirebaseAuthClient _firebaseAuthClient;
 
-        public CurrentUserStore()
+        public User? User { get; private set; }
+        public bool IsLoggedIn => User != null;
+
+        public CurrentUserStore(FirebaseAuthClient firebaseAuthClient)
         {
-            User = new User();
+            _firebaseAuthClient = firebaseAuthClient;
+
+            _firebaseAuthClient.AuthStateChanged += FirebaseAuthClient_AuthStateChanged;
         }
 
-        public void UpdateAuth(FirebaseAuthLink auth)
+        private void FirebaseAuthClient_AuthStateChanged(object? sender, UserEventArgs e)
         {
-            User = new User(auth);
+            if (_firebaseAuthClient.User == null)
+            {
+                User = null;
+            }
+            else
+            {
+                User = new User(_firebaseAuthClient.User);
+            }
         }
     }
 }

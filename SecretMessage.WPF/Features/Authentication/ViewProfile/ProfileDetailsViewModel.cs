@@ -1,9 +1,9 @@
-﻿using SecretMessage.WPF.Commands;
+﻿using Firebase.Auth;
+using SecretMessage.WPF.Commands;
 using SecretMessage.WPF.Entities.Users;
 using SecretMessage.WPF.Shared.Commands;
 using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.Shared.ViewModels;
-using SecretMessage.WPF.Stores;
 using System.Windows.Input;
 
 namespace SecretMessage.WPF.ViewModels
@@ -20,13 +20,13 @@ namespace SecretMessage.WPF.ViewModels
         public ICommand NavigateHomeCommand { get; }
 
         public ProfileDetailsViewModel(
-            AuthenticationStore authenticationStore,
-            CurrentUserStore currentUserStore, 
+            FirebaseAuthClient firebaseAuthClient,
+            CurrentUserStore currentUserStore,
             INavigationService homeNavigationService)
         {
             _currentUserStore = currentUserStore;
 
-            SendEmailVerificationEmailCommand = new SendEmailVerificationEmailCommand(authenticationStore);
+            SendEmailVerificationEmailCommand = new SendEmailVerificationEmailCommand(firebaseAuthClient);
             NavigateHomeCommand = new NavigateCommand(homeNavigationService);
         }
     }

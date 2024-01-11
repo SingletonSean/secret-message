@@ -1,11 +1,11 @@
-﻿using SecretMessage.WPF.Commands;
+﻿using Firebase.Auth;
+using SecretMessage.WPF.Commands;
 using SecretMessage.WPF.Entities.Users;
 using SecretMessage.WPF.Features.SecretMessage.ViewSecretMessage;
 using SecretMessage.WPF.Queries;
 using SecretMessage.WPF.Shared.Commands;
 using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.Shared.ViewModels;
-using SecretMessage.WPF.Stores;
 using System.Windows.Input;
 
 namespace SecretMessage.WPF.ViewModels
@@ -35,7 +35,7 @@ namespace SecretMessage.WPF.ViewModels
         public ICommand LogoutCommand { get; }
 
         public HomeViewModel(
-            AuthenticationStore authenticationStore, 
+            FirebaseAuthClient firebaseAuthClient,
             CurrentUserStore currentUserStore,
             IGetSecretMessageQuery getSecretMessageQuery,
             INavigationService profileNavigationService,
@@ -46,18 +46,18 @@ namespace SecretMessage.WPF.ViewModels
 
             LoadSecretMessageCommand = new LoadSecretMessageCommand(this, getSecretMessageQuery, currentUserStore, dbContextFactory);
             NavigateProfileCommand = new NavigateCommand(profileNavigationService);
-            LogoutCommand = new LogoutCommand(authenticationStore, loginNavigationService);
+            LogoutCommand = new LogoutCommand(firebaseAuthClient, loginNavigationService);
         }
 
         public static HomeViewModel LoadViewModel(
-            AuthenticationStore authenticationStore, 
+            FirebaseAuthClient firebaseAuthClient,
             CurrentUserStore currentUserStore,
             IGetSecretMessageQuery getSecretMessageQuery,
             INavigationService profileNavigationService,
             INavigationService loginNavigationService,
             IViewSecretMessageDbContextFactory dbContextFactory)
         {
-            HomeViewModel homeViewModel = new HomeViewModel(authenticationStore, currentUserStore, getSecretMessageQuery, profileNavigationService, loginNavigationService, dbContextFactory);
+            HomeViewModel homeViewModel = new HomeViewModel(firebaseAuthClient, currentUserStore, getSecretMessageQuery, profileNavigationService, loginNavigationService, dbContextFactory);
 
             homeViewModel.LoadSecretMessageCommand.Execute(null);
 

@@ -1,8 +1,8 @@
-﻿using SecretMessage.WPF.Commands;
+﻿using Firebase.Auth;
+using SecretMessage.WPF.Commands;
 using SecretMessage.WPF.Shared.Commands;
 using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.Shared.ViewModels;
-using SecretMessage.WPF.Stores;
 using System.Windows.Input;
 
 namespace SecretMessage.WPF.Features.Authentication.Login
@@ -44,12 +44,12 @@ namespace SecretMessage.WPF.Features.Authentication.Login
         public ICommand NavigatePasswordResetCommand { get; }
 
         public LoginFormViewModel(
-            AuthenticationStore authenticationStore,
+            FirebaseAuthClient firebaseAuthClient,
             INavigationService registerNavigationService,
             INavigationService homeNavigationService,
             INavigationService passwordResetNavigationService)
         {
-            SubmitCommand = new LoginCommand(this, authenticationStore, homeNavigationService);
+            SubmitCommand = new LoginCommand(this, firebaseAuthClient, homeNavigationService);
             NavigateRegisterCommand = new NavigateCommand(registerNavigationService);
             NavigatePasswordResetCommand = new NavigateCommand(passwordResetNavigationService);
         }

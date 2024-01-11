@@ -1,5 +1,5 @@
-﻿using SecretMessage.WPF.Shared.Commands;
-using SecretMessage.WPF.Stores;
+﻿using Firebase.Auth;
+using SecretMessage.WPF.Shared.Commands;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,18 +8,18 @@ namespace SecretMessage.WPF.Commands
 {
     public class SendEmailVerificationEmailCommand : AsyncCommandBase
     {
-        private readonly AuthenticationStore _authenticationStore;
+        private readonly FirebaseAuthClient _firebaseAuthClient;
 
-        public SendEmailVerificationEmailCommand(AuthenticationStore authenticationStore)
+        public SendEmailVerificationEmailCommand(FirebaseAuthClient firebaseAuthClient)
         {
-            _authenticationStore = authenticationStore;
+            _firebaseAuthClient = firebaseAuthClient;
         }
 
         protected override async Task ExecuteAsync(object? parameter)
         {
             try
             {
-                await _authenticationStore.SendEmailVerificationEmail();
+                //await _firebaseAuthClient.SendEmailVerificationEmail();
 
                 MessageBox.Show("Successfully sent email verification email. Check your email to verify.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }

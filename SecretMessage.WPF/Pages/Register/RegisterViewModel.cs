@@ -8,9 +8,9 @@ namespace SecretMessage.WPF.ViewModels
     {
         public RegisterFormViewModel RegisterFormViewModel { get; }
 
-        public RegisterViewModel(FirebaseAuthProvider firebaseAuthProvider, INavigationService loginNavigationService)
+        public RegisterViewModel(FirebaseAuthClient firebaseAuthClient, INavigationService loginNavigationService)
         {
-            RegisterFormViewModel = new RegisterFormViewModel(firebaseAuthProvider, loginNavigationService);
+            RegisterFormViewModel = new RegisterFormViewModel(firebaseAuthClient, loginNavigationService);
         }
     }
 }

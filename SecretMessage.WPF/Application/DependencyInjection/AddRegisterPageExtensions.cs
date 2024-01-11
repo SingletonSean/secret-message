@@ -14,7 +14,7 @@ namespace SecretMessage.WPF.Application.DependencyInjection
             {
                 serviceCollection.AddTransient<RegisterViewModel>(
                     (services) => new RegisterViewModel(
-                        services.GetRequiredService<FirebaseAuthProvider>(),
+                        services.GetRequiredService<FirebaseAuthClient>(),
                         services.GetRequiredService<NavigationService<LoginViewModel>>()));
 
                 serviceCollection.AddNavigationService<RegisterViewModel>();

@@ -83,9 +83,9 @@ namespace SecretMessage.WPF.ViewModels
 
         public ICommand NavigateLoginCommand { get; }
 
-        public RegisterFormViewModel(FirebaseAuthProvider firebaseAuthProvider, INavigationService loginNavigationService)
+        public RegisterFormViewModel(FirebaseAuthClient firebaseAuthClient, INavigationService loginNavigationService)
         {
-            SubmitCommand = new RegisterCommand(this, firebaseAuthProvider, loginNavigationService);
+            SubmitCommand = new RegisterCommand(this, firebaseAuthClient, loginNavigationService);
             NavigateLoginCommand = new NavigateCommand(loginNavigationService);
         }
     }

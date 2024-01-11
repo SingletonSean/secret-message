@@ -27,9 +27,9 @@ namespace SecretMessage.WPF.ViewModels
 
         public ICommand NavigateLoginCommand { get; }
 
-        public PasswordResetFormViewModel(FirebaseAuthProvider firebaseAuthProvider, INavigationService loginNavigationService)
+        public PasswordResetFormViewModel(FirebaseAuthClient firebaseAuthClient, INavigationService loginNavigationService)
         {
-            SendPasswordResetEmailCommand = new SendPasswordResetEmailCommand(this, firebaseAuthProvider, loginNavigationService);
+            SendPasswordResetEmailCommand = new SendPasswordResetEmailCommand(this, firebaseAuthClient, loginNavigationService);
             NavigateLoginCommand = new NavigateCommand(loginNavigationService);
         }
     }

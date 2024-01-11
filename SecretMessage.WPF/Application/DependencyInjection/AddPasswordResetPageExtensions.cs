@@ -11,10 +11,10 @@ namespace SecretMessage.WPF.Application.DependencyInjection
         public static IHostBuilder AddPasswordResetPage(this IHostBuilder host)
         {
             host.ConfigureServices(serviceCollection =>
-            { 
+            {
                 serviceCollection.AddTransient<PasswordResetViewModel>(
                     (services) => new PasswordResetViewModel(
-                        services.GetRequiredService<FirebaseAuthProvider>(),
+                        services.GetRequiredService<FirebaseAuthClient>(),
                         services.GetRequiredService<NavigationService<LoginViewModel>>()));
 
                 serviceCollection.AddNavigationService<PasswordResetViewModel>();

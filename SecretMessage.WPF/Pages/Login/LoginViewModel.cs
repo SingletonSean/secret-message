@@ -1,7 +1,7 @@
-﻿using SecretMessage.WPF.Features.Authentication.Login;
+﻿using Firebase.Auth;
+using SecretMessage.WPF.Features.Authentication.Login;
 using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.Shared.ViewModels;
-using SecretMessage.WPF.Stores;
 
 namespace SecretMessage.WPF.ViewModels
 {
@@ -10,13 +10,13 @@ namespace SecretMessage.WPF.ViewModels
         public LoginFormViewModel LoginFormViewModel { get; }
 
         public LoginViewModel(
-            AuthenticationStore authenticationStore, 
-            INavigationService registerNavigationService, 
-            INavigationService homeNavigationService, 
+            FirebaseAuthClient firebaseAuthClient,
+            INavigationService registerNavigationService,
+            INavigationService homeNavigationService,
             INavigationService passwordResetNavigationService)
         {
             LoginFormViewModel = new LoginFormViewModel(
-                authenticationStore,
+                firebaseAuthClient,
                 registerNavigationService,
                 homeNavigationService,
                 passwordResetNavigationService);

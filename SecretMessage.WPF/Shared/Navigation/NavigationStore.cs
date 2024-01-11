@@ -1,5 +1,5 @@
-﻿using System;
-using SecretMessage.WPF.Shared.ViewModels;
+﻿using SecretMessage.WPF.Shared.ViewModels;
+using System;
 
 namespace SecretMessage.WPF.Shared.Navigation
 {

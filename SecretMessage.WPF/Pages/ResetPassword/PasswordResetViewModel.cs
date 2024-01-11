@@ -8,9 +8,9 @@ namespace SecretMessage.WPF.ViewModels
     {
         public PasswordResetFormViewModel PasswordResetFormViewModel { get; }
 
-        public PasswordResetViewModel(FirebaseAuthProvider firebaseAuthProvider, INavigationService loginNavigationService)
+        public PasswordResetViewModel(FirebaseAuthClient firebaseAuthClient, INavigationService loginNavigationService)
         {
-            PasswordResetFormViewModel = new PasswordResetFormViewModel(firebaseAuthProvider, loginNavigationService);
+            PasswordResetFormViewModel = new PasswordResetFormViewModel(firebaseAuthClient, loginNavigationService);
         }
     }
 }

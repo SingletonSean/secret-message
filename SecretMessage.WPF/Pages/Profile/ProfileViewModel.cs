@@ -1,7 +1,7 @@
-﻿using SecretMessage.WPF.Entities.Users;
+﻿using Firebase.Auth;
+using SecretMessage.WPF.Entities.Users;
 using SecretMessage.WPF.Shared.Navigation;
 using SecretMessage.WPF.Shared.ViewModels;
-using SecretMessage.WPF.Stores;
 
 namespace SecretMessage.WPF.ViewModels
 {
@@ -9,11 +9,11 @@ namespace SecretMessage.WPF.ViewModels
     {
         public ProfileDetailsViewModel ProfileDetailsViewModel { get; }
 
-        public ProfileViewModel(AuthenticationStore authenticationStore, 
+        public ProfileViewModel(FirebaseAuthClient firebaseAuthClient,
             CurrentUserStore currentUserStore,
             INavigationService homeNavigationService)
         {
-            ProfileDetailsViewModel = new ProfileDetailsViewModel(authenticationStore, currentUserStore, homeNavigationService);
+            ProfileDetailsViewModel = new ProfileDetailsViewModel(firebaseAuthClient, currentUserStore, homeNavigationService);
         }
     }
 }

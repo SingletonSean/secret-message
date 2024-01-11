@@ -11,16 +11,16 @@ namespace SecretMessage.WPF.Commands
     public class SendPasswordResetEmailCommand : AsyncCommandBase
     {
         private readonly PasswordResetFormViewModel _viewModel;
-        private readonly FirebaseAuthProvider _firebaseAuthProvider;
+        private readonly FirebaseAuthClient _firebaseAuthClient;
         private readonly INavigationService _loginNavigationService;
 
         public SendPasswordResetEmailCommand(
-            PasswordResetFormViewModel viewModel, 
-            FirebaseAuthProvider firebaseAuthProvider, 
+            PasswordResetFormViewModel viewModel,
+            FirebaseAuthClient firebaseAuthClient,
             INavigationService loginNavigationService)
         {
             _viewModel = viewModel;
-            _firebaseAuthProvider = firebaseAuthProvider;
+            _firebaseAuthClient = firebaseAuthClient;
             _loginNavigationService = loginNavigationService;
         }
 
@@ -30,7 +30,7 @@ namespace SecretMessage.WPF.Commands
 
             try
             {
-                await _firebaseAuthProvider.SendPasswordResetEmailAsync(email);
+                await _firebaseAuthClient.ResetEmailPasswordAsync(email);
 
                 MessageBox.Show("Successfully sent password reset email. Check your email to finish resetting your password.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 

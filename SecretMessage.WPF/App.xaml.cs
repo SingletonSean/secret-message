@@ -42,6 +42,6 @@ namespace SecretMessage.WPF
             base.OnStartup(e);
         }
 
-       
+
     }
 }

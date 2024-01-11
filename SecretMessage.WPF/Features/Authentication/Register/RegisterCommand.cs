@@ -11,16 +11,16 @@ namespace SecretMessage.WPF.Commands
     public class RegisterCommand : AsyncCommandBase
     {
         private readonly RegisterFormViewModel _registerViewModel;
-        private readonly FirebaseAuthProvider _firebaseAuthProvider;
+        private readonly FirebaseAuthClient _firebaseAuthClient;
         private readonly INavigationService _loginNavigationService;
 
         public RegisterCommand(
-            RegisterFormViewModel registerViewModel, 
-            FirebaseAuthProvider firebaseAuthProvider, 
+            RegisterFormViewModel registerViewModel,
+            FirebaseAuthClient firebaseAuthClient,
             INavigationService loginNavigationService)
         {
             _registerViewModel = registerViewModel;
-            _firebaseAuthProvider = firebaseAuthProvider;
+            _firebaseAuthClient = firebaseAuthClient;
             _loginNavigationService = loginNavigationService;
         }
 
@@ -37,11 +37,10 @@ namespace SecretMessage.WPF.Commands
 
             try
             {
-                await _firebaseAuthProvider.CreateUserWithEmailAndPasswordAsync(
+                await _firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(
                     _registerViewModel.Email,
                     password,
-                    _registerViewModel.Username,
-                    _registerViewModel.ShouldSendVerificationEmail);
+                    _registerViewModel.Username);
 
                 MessageBox.Show("Successfully registered!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 

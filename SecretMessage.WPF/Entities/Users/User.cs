@@ -1,28 +1,18 @@
-﻿using Firebase.Auth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SecretMessage.WPF.Entities.Users
+﻿namespace SecretMessage.WPF.Entities.Users
 {
     public class User
     {
-        public FirebaseAuthLink Auth { get; }
+        private readonly Firebase.Auth.User _user;
 
-        public string Id => Auth?.User?.LocalId;
-        public string DisplayName => Auth?.User?.DisplayName;
-        public string Email => Auth?.User?.Email;
-        public bool IsEmailVerified => Auth?.User?.IsEmailVerified ?? false;
-        public bool IsLoggedIn => (!Auth?.IsExpired()) ?? false;
+        public string Id => _user?.Uid;
+        public string DisplayName => _user?.Info?.DisplayName;
+        public string Email => _user?.Info?.Email;
+        public bool IsEmailVerified => _user?.Info?.IsEmailVerified ?? false;
+        public bool IsCredentialExpired => (!_user?.Credential?.IsExpired()) ?? false;
 
-
-        public User() { }
-
-        public User(FirebaseAuthLink auth)
+        public User(Firebase.Auth.User user)
         {
-            Auth = auth;
+            _user = user;
         }
     }
 }

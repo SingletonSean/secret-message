@@ -1,11 +1,6 @@
 ﻿using Firebase.Auth;
-using SecretMessage.WPF.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,20 +8,25 @@ namespace SecretMessage.WPF.Http
 {
     public class FirebaseAuthHttpMessageHandler : DelegatingHandler
     {
-        private readonly AuthenticationStore _authenticationStore;
+        private readonly FirebaseAuthClient _firebaseAuthClient;
 
-        public FirebaseAuthHttpMessageHandler(AuthenticationStore authenticationStore)
+        public FirebaseAuthHttpMessageHandler(FirebaseAuthClient firebaseAuthClient)
         {
-            _authenticationStore = authenticationStore;
+            _firebaseAuthClient = firebaseAuthClient;
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            FirebaseAuthLink firebaseAuthLink = await _authenticationStore.GetFreshAuthAsync();
-
-            if(firebaseAuthLink != null)
+            if (_firebaseAuthClient.User == null)
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", firebaseAuthLink.FirebaseToken);
+                return await base.SendAsync(request, cancellationToken);
+            }
+
+            string firebaseToken = await _firebaseAuthClient.User.GetIdTokenAsync();
+
+            if (firebaseToken != null)
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", firebaseToken);
             }
 
             return await base.SendAsync(request, cancellationToken);
