@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SecretMessage.MAUI.Pages.SignUpView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Sign Up">
+    <VerticalStackLayout>
+        <Entry Text="{Binding Email}" />
+        <Entry Text="{Binding Username}" />
+        <Entry IsPassword="True" Text="{Binding Password}" />
+        <Button Command="{Binding SignUpCommand}" Text="Sign Up" />
+        <Button Command="{Binding NavigateSignInCommand}" Text="Already have an account? Sign in" />
+    </VerticalStackLayout>
+</ContentPage>

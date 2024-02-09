@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SecretMessage.MAUI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:SecretMessage.MAUI.Pages"
+    Title="SecretMessage.MAUI"
+    Shell.FlyoutBehavior="Disabled">
+
+    <ShellContent
+        Title="Sign In"
+        ContentTemplate="{DataTemplate pages:SignInView}"
+        Route="SignIn" />
+
+    <ShellContent
+        Title="Sign Up"
+        ContentTemplate="{DataTemplate pages:SignUpView}"
+        Route="SignUp" />
+</Shell>
