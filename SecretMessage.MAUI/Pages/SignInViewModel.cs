@@ -41,9 +41,22 @@ namespace SecretMessage.MAUI.Pages
         [RelayCommand]
         private async Task SignIn()
         {
-            await _authClient.SignInWithEmailAndPasswordAsync(Email, Password);
+            // await _authClient.SignInWithEmailAndPasswordAsync(Email, Password);
 
-            OnPropertyChanged(nameof(Username));
+            try
+            {
+                var x = await _authClient.SignInWithRedirectAsync(FirebaseProviderType.Google, async (url) =>
+                {
+                    return await Shell.Current.DisplayPromptAsync("Sign In", "Enter the return URL below.");
+                });
+
+                OnPropertyChanged(nameof(Username));
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         [RelayCommand]

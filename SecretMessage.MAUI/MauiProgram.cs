@@ -31,7 +31,8 @@ namespace SecretMessage.MAUI
                 AuthDomain = "secret-message-27a1c.firebaseapp.com",
                 Providers = new FirebaseAuthProvider[]
                 {
-                    new EmailProvider()
+                    new EmailProvider(),
+                    new GoogleProvider().AddScopes("email")
                 },
                 UserRepository = new FileUserRepository("SecretMessage")
             }));
