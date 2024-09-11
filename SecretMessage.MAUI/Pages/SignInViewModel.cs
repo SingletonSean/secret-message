@@ -47,7 +47,9 @@ namespace SecretMessage.MAUI.Pages
             {
                 var x = await _authClient.SignInWithRedirectAsync(FirebaseProviderType.Google, async (url) =>
                 {
-                    return await Shell.Current.DisplayPromptAsync("Sign In", "Enter the return URL below.");
+                    return await WebAuthenticationBroker.AuthenticateAsync(
+                        url,
+                        "https://" + "secret-message-27a1c.firebaseapp.com" + "/__/auth/handler");
                 });
 
                 OnPropertyChanged(nameof(Username));
